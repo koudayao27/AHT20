@@ -1,7 +1,6 @@
 /**
- * Grove - AHT20 Custom Block
+ * AHT20 Custom Block
  */
-//% groups=['AHT20']
 namespace grove
 {
     function Read(aht20: grove.sensors.AHT20): { Humidity: number, Temperature: number }
@@ -24,10 +23,9 @@ namespace grove
     }
 
     /**
-     * Read the temperature(°C) from Grove-AHT20(SKU#101990644)
+     * Read the temperature(°C)
      */
-    //% group="AHT20"
-    //% block="[Grove - Temp&Humi Sensor]|Read the temperature(°C))"
+    //% block="Read the temperature(°C))"
     //% weight=3
     export function aht20ReadTemperatureC(): number
     {
@@ -39,10 +37,9 @@ namespace grove
     }
 
     /**
-     * Read the temperature(°F) from Grove-AHT20(SKU#101990644)
+     * Read the temperature(°F)
      */
-    //% group="AHT20"
-    //% block="[Grove - Temp&Humi Sensor]|Read the temperature(°F))"
+    //% block="Read the temperature(°F))"
     //% weight=2
     export function aht20ReadTemperatureF(): number
     {
@@ -54,10 +51,9 @@ namespace grove
     }
 
     /**
-     * Read the humidity from Grove-AHT20(SKU#101990644)
+     * Read the humidity
      */
-    //% group="AHT20"
-    //% block="[Grove - Temp&Humi Sensor]|Read the humidity"
+    //% block="Read the humidity"
     //% weight=1
     export function aht20ReadHumidity(): number
     {
@@ -68,4 +64,19 @@ namespace grove
         return val.Humidity;
     }
 
+    /**
+     * Read the absolute humidity
+     */
+    //% block="Read the absolute humidity (g/m³)"
+    //% weight=0
+    export function readAbsHumidity(): number
+    {
+        const aht20 = new grove.sensors.AHT20();
+        const val = Read(aht20);
+        if (val == null) return null;
+        const T = val.Temperature;
+        const rh = val.Humidity;
+        const ret = 6.112 * Math.exp((17.67 * T)/(T + 243.5)) * rh * 2.1674 / (273.15 + T);
+        return ret
+    }
 }
