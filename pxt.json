@@ -1,17 +1,14 @@
 {
-    "name": "Grove",
+    "name": "AHT20",
     "version": "0.5.0",
-    "description": "A Microsoft MakeCode package for Seeed Studio Grove module",
+    "description": "AHT20",
     "license": "MIT",
     "dependencies": {
         "core": "*"
     },
     "files": [
         "README.md",
-        "main.ts",
         "blocks/GroveAHT20.ts",
-        "_locales/ja/Grove-strings.json",
-        "_locales/de/Grove-strings.json",
         "sensors/AHT20.ts"
     ],
     "testFiles": [
