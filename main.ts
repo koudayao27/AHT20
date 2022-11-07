@@ -60,15 +60,20 @@ namespace AHT20 {
     /**
      * Read the absolute humidity
      */
-    //% block="Read the absolute humidity (g/m³)"
+    //% block="Read the absolute humidity (g/m³) || as fixed-point 8.8bit %fp88"
     //% weight=0
-    export function readAbsHumidity(): number {
+    export function readAbsHumidity(fp88?: boolean): number {
         const aht20 = new AHT20.AHT20Sensor();
         const val = Read(aht20);
         if (val == null) return null;
         const T = val.Temperature;
         const rh = val.Humidity;
         const ret = 6.112 * Math.exp((17.67 * T) / (T + 243.5)) * rh * 2.1674 / (273.15 + T);
-        return ret
+        if (!fp88) {
+            return ret;
+        }
+        const byte0 = Math.floor(ret);
+        const byte1 = Math.floor(256 * (ret - byte0));
+        return byte0 << 8 | byte1 & 0xffff;
     }
 }
